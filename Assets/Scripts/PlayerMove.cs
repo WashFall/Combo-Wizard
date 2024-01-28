@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,16 +12,20 @@ public class PlayerMove : MonoBehaviour
     [Header("Camera Settings")]
     public CinemachineTargetGroup targetGroup;
     public float priorityWeight = 7;
+    public float idleWeight = 1.5f;
+    public float tweenSpeed = 4;
 
     private NavMeshAgent agent;
     private Camera cam;
     private Rigidbody rb;
+    private float tweenWeight;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
+        tweenWeight = idleWeight;
     }
 
     private void Update()
@@ -39,11 +44,14 @@ public class PlayerMove : MonoBehaviour
 
         if(agent.velocity == Vector3.zero)
         {
-            targetGroup.m_Targets[0].weight = 1.5f;
+            tweenWeight = Mathf.Lerp(tweenWeight, idleWeight, 4 * Time.deltaTime);
+            targetGroup.m_Targets[0].weight = tweenWeight;
         }
         else
         {
-            targetGroup.m_Targets[0].weight = priorityWeight;
+            tweenWeight = Mathf.Lerp(tweenWeight, priorityWeight, tweenSpeed * Time.deltaTime);
+            Debug.Log(tweenWeight);
+            targetGroup.m_Targets[0].weight = tweenWeight;
         }
     }
 }

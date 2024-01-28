@@ -1334,6 +1334,11 @@ PrefabInstance:
       objectReference: {fileID: 135842847}
     - target: {fileID: 7666305002177187072, guid: 23684676bdb1c634f943857207449ca3,
         type: 3}
+      propertyPath: tweenSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7666305002177187072, guid: 23684676bdb1c634f943857207449ca3,
+        type: 3}
       propertyPath: targetGroup
       value: 
       objectReference: {fileID: 135842847}
