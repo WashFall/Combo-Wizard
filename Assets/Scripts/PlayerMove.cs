@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMove : MonoBehaviour
 {
+    [Header("Camera Settings")]
+    public CinemachineTargetGroup targetGroup;
+    public float priorityWeight = 7;
+
     private NavMeshAgent agent;
     private Camera cam;
     private Rigidbody rb;
@@ -30,6 +35,15 @@ public class PlayerMove : MonoBehaviour
             {
                 agent.SetDestination(hitInfo.point);
             }
+        }
+
+        if(agent.velocity == Vector3.zero)
+        {
+            targetGroup.m_Targets[0].weight = 1.5f;
+        }
+        else
+        {
+            targetGroup.m_Targets[0].weight = priorityWeight;
         }
     }
 }
