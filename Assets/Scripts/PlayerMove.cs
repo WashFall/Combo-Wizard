@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Camera Settings")]
     public CinemachineTargetGroup targetGroup;
+    public CinemachineVirtualCamera virtualCamera;
     public float priorityWeight = 7;
     public float idleWeight = 1.5f;
     public float tweenSpeed = 4;
@@ -50,7 +51,6 @@ public class PlayerMove : MonoBehaviour
         else
         {
             tweenWeight = Mathf.Lerp(tweenWeight, priorityWeight, tweenSpeed * Time.deltaTime);
-            Debug.Log(tweenWeight);
             targetGroup.m_Targets[0].weight = tweenWeight;
         }
     }
