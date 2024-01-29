@@ -6,30 +6,19 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     //Dictionary<string, TMP_Text> inventoryTexts = new Dictionary<string, TMP_Text>();
-    public TMP_Text bonesText;
-    public TMP_Text beersText;
-    public TMP_Text forksText;
+    public GameObject inventoryPanel;
 
     private void Start()
     {
-        bonesText.text = "Bones: 0";
-        beersText.text = "Beers: 0";
-        forksText.text = "Forks: 0";
+        inventoryPanel.SetActive(false);
     }
 
-    public void UpdateText(string text, int value)
+    private void Update()
     {
-        switch(text)
+        if(Input.GetKeyDown(KeyCode.I))
         {
-            case "bones":
-                bonesText.text = "Bones: " + value.ToString(); 
-                break;
-            case "beers":
-                beersText.text = "Beers: " + value.ToString();
-                break;
-            case "forks":
-                forksText.text = "Forks: " + value.ToString();
-                break;
+            inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+            GameManager.INSTANCE.TogglePauseGame();
         }
     }
 }

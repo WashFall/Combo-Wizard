@@ -32,6 +32,10 @@ public class Item : MonoBehaviour
     // If player is close enough and the item is available, pick it up on mouse click
     private void OnMouseDown()
     {
+        if(GameManager.INSTANCE.gameIsPaused)
+        {
+            return;
+        }
         GameManager.INSTANCE.selectedItem = gameObject;
     }
 

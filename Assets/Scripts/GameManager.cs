@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public List<Item> itemsInLevel;
     public UIManager uiManager;
     public GameObject selectedItem;
+    public bool gameIsPaused = false;
 
     private void Awake()
     {
@@ -27,6 +28,11 @@ public class GameManager : MonoBehaviour
     public void OnItemPickUp(string itemName)
     {
         inventory.onItemPickUp(itemName);
-        uiManager.UpdateText(itemName, inventory.items[itemName]);
+    }
+
+    public void TogglePauseGame()
+    {
+        gameIsPaused = !gameIsPaused;
+        Time.timeScale = gameIsPaused ? 0.0f : 1.0f;
     }
 }

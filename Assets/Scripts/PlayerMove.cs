@@ -31,6 +31,11 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.INSTANCE.gameIsPaused)
+        {
+            return;
+        }
+
         if (Input.GetMouseButton(0))
         {
             RaycastHit hitInfo;
