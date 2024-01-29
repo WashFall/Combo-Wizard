@@ -9,8 +9,7 @@ public class Item : MonoBehaviour
     public Transform player;
     public bool available = true;
 
-    private bool closeEnough = false;
-    private float pickUpDistance = 3f;
+    private float pickUpDistance = 2f;
 
     private void Start()
     {
@@ -21,19 +20,19 @@ public class Item : MonoBehaviour
     {
         if (Vector3.Distance(player.position, gameObject.transform.position) < pickUpDistance)
         {
-            closeEnough = true;
+            if(available && GameManager.INSTANCE.selectedItem == gameObject)
+            {
+                GameManager.INSTANCE.OnItemPickUp(itemName);
+                GameManager.INSTANCE.itemsInLevel.Remove(this);
+                Destroy(gameObject);
+            }
         }
     }
 
     // If player is close enough and the item is available, pick it up on mouse click
     private void OnMouseDown()
     {
-        if (closeEnough && available)
-        {
-            GameManager.INSTANCE.OnItemPickUp(itemName);
-            GameManager.INSTANCE.itemsInLevel.Remove(this);
-            Destroy(gameObject);
-        }
+        GameManager.INSTANCE.selectedItem = gameObject;
     }
 
     // Call this method when the item is not pickupable before a spell is casted for example

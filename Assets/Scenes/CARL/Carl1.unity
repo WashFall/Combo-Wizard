@@ -2671,6 +2671,7 @@ MonoBehaviour:
   inventory: {fileID: 533111865}
   itemsInLevel: []
   uiManager: {fileID: 124127933}
+  selectedItem: {fileID: 0}
 --- !u!4 &1257634660
 Transform:
   m_ObjectHideFlags: 0
@@ -3320,7 +3321,7 @@ Transform:
   m_GameObject: {fileID: 1958746012}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2913334, y: -0.4016072, z: 0.13645327, w: 0.857448}
-  m_LocalPosition: {x: 7.0590053, y: 8.307005, z: -9.074503}
+  m_LocalPosition: {x: 7.0590053, y: 8.307004, z: -9.074503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4024,7 +4025,7 @@ PrefabInstance:
     - target: {fileID: 3111445721266162825, guid: a227e4fd3e1b85a4c91f9be55434333b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.307005
+      value: 8.307004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

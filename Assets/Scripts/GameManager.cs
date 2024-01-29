@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Inventory inventory;
     public List<Item> itemsInLevel;
     public UIManager uiManager;
+    public GameObject selectedItem;
 
     private void Awake()
     {
