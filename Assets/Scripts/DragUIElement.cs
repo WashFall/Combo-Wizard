@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,7 +38,7 @@ public class DragUIElement : MonoBehaviour
         DragUIElement switchElement;
         if(results.Count > 2)
         {
-            results[1].gameObject.TryGetComponent<DragUIElement>(out switchElement);
+            results[1].gameObject.TryGetComponent(out switchElement);
             if (switchElement is not null)
             {
                 endParent = results[2].gameObject.transform;
@@ -52,10 +51,10 @@ public class DragUIElement : MonoBehaviour
             }
         }
         else
-            {
-                transform.SetParent(startParent);
-                transform.position = startParent.position;
-            }
+        {
+            transform.SetParent(startParent);
+            transform.position = startParent.position;
+        }
         
     }
 }
