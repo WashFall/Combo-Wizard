@@ -6,22 +6,25 @@ public class Inventory : MonoBehaviour
 {
     public Dictionary<string, int> items = new Dictionary<string, int>();
 
-    public delegate void OnItemPickUp(string itemName);
-    public OnItemPickUp onItemPickUp;
-
     private void Start()
     {
-        onItemPickUp += ItemPickUp;
         items.Add("bones", 0);
         items.Add("beers", 0);
         items.Add("forks", 0);
     }
 
-    public void ItemPickUp(string itemName)
+    public void HandleItem(string itemName, int amount)
     {
         if(items.ContainsKey(itemName))
         {
-            items[itemName]++;
+            if(amount > 0)
+            {
+                items[itemName] += amount;
+            }
+            else if(amount < 0)
+            {
+                items[itemName] -= amount;
+            }
         }
         else
         {
@@ -33,20 +36,4 @@ public class Inventory : MonoBehaviour
     {
         items.Add(itemName, 1);
     }
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        OnItemPickUp("bones");
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.S))
-    //    {
-    //        OnItemPickUp("beers");
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.D))
-    //    {
-    //        OnItemPickUp("forks");
-    //    }
-    //}
 }

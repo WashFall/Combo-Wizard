@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class Item : MonoBehaviour
 {
@@ -13,17 +14,17 @@ public class Item : MonoBehaviour
 
     private void Start()
     {
-        GameManager.INSTANCE.AddItemToList(this);
+        INSTANCE.AddItemToList(this);
     }
 
     private void Update()
     {
         if (Vector3.Distance(player.position, gameObject.transform.position) < pickUpDistance)
         {
-            if(available && GameManager.INSTANCE.selectedItem == gameObject)
+            if(available && INSTANCE.selectedItem == gameObject)
             {
-                GameManager.INSTANCE.OnItemPickUp(itemName);
-                GameManager.INSTANCE.itemsInLevel.Remove(this);
+                INSTANCE.onItemPickUp(itemName);
+                INSTANCE.itemsInLevel.Remove(this);
                 Destroy(gameObject);
             }
         }
@@ -32,11 +33,11 @@ public class Item : MonoBehaviour
     // If player is close enough and the item is available, pick it up on mouse click
     private void OnMouseDown()
     {
-        if(GameManager.INSTANCE.gameIsPaused)
+        if(INSTANCE.gameIsPaused)
         {
             return;
         }
-        GameManager.INSTANCE.selectedItem = gameObject;
+        INSTANCE.selectedItem = gameObject;
     }
 
     // Call this method when the item is not pickupable before a spell is casted for example
