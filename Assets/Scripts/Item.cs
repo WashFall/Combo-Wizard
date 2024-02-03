@@ -3,7 +3,7 @@ using static GameManager;
 
 public class Item : MonoBehaviour
 {
-    public string itemName;
+    public Ingredient ingredient;
     [HideInInspector]
     public Transform player;
     public bool available = true;
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
         {
             if(available && INSTANCE.selectedItem == gameObject)
             {
-                INSTANCE.onItemPickUp(itemName);
+                INSTANCE.onItemPickUp(ingredient);
                 INSTANCE.itemsInLevel.Remove(this);
                 Destroy(gameObject);
             }

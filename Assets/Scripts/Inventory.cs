@@ -1,38 +1,35 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
-    public Dictionary<string, int> items = new Dictionary<string, int>();
+    public Dictionary<Ingredient, int> items = new Dictionary<Ingredient, int>();
 
-    private void Start()
+    public void HandleItem(Ingredient item, int amount)
     {
-        items.Add("bones", 0);
-        items.Add("beers", 0);
-        items.Add("forks", 0);
-    }
-
-    public void HandleItem(string itemName, int amount)
-    {
-        if(items.ContainsKey(itemName))
+        if(items.ContainsKey(item))
         {
             if(amount > 0)
             {
-                items[itemName] += amount;
+                items[item] += amount;
             }
             else if(amount < 0)
             {
-                items[itemName] -= amount;
+                if (items[item] + amount <= 0)
+                {
+                    items[item] = 0;
+                    return;
+                }
+                items[item] += amount;
             }
         }
         else
         {
-            RegisterNewItem(itemName);
+            RegisterNewItem(item, 1);
         }
     }
 
-    public void RegisterNewItem(string itemName)
+    public void RegisterNewItem(Ingredient item, int amount)
     {
-        items.Add(itemName, 1);
+        items.Add(item, amount);
     }
 }

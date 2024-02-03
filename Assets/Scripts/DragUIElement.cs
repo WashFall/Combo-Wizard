@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class DragUIElement : MonoBehaviour
 {
     public Canvas canvas;
-    public Transform startParent;
+    public Transform slotObject;
+    public InventorySlot thisSlot;
     public Transform parentReplacement;
-    public Transform endParent;
 
     private void Start()
     {
-        startParent = transform.parent;
+        slotObject = transform.parent;
+        thisSlot = slotObject.GetComponent<InventorySlot>();
     }
 
     public void DragHandler(BaseEventData data)
@@ -35,26 +36,23 @@ public class DragUIElement : MonoBehaviour
     {
         List<RaycastResult> results = new List<RaycastResult>();
         canvas.GetComponent<GraphicRaycaster>().Raycast((PointerEventData)data, results);
-        DragUIElement switchElement;
+        InventorySlot newSlot = null;
         if(results.Count > 2)
         {
-            results[1].gameObject.TryGetComponent(out switchElement);
-            if (switchElement is not null)
+            foreach(var element in results)
             {
-                endParent = results[2].gameObject.transform;
-                switchElement.startParent = startParent;
-                switchElement.transform.position = switchElement.startParent.transform.position;
-                switchElement.transform.SetParent(switchElement.startParent);
-                startParent = endParent;
-                transform.SetParent(startParent);
-                transform.position = startParent.transform.position;
+                element.gameObject.TryGetComponent(out newSlot);
+            }
+
+            if (newSlot is not null)
+            {
+                Ingredient temporary = thisSlot.ingredient;
+                thisSlot.UpdateIngredient(newSlot.ingredient);
+                newSlot.UpdateIngredient(temporary);
             }
         }
-        else
-        {
-            transform.SetParent(startParent);
-            transform.position = startParent.position;
-        }
-        
+
+        transform.SetParent(slotObject);
+        transform.position = slotObject.position;
     }
 }

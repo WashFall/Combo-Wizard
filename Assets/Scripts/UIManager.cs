@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public GameObject inventoryPanel;
     public List<Transform> inventorySlots;
-    public Image boil, crush, dry;
+    public SpellSlot boil, crush, dry;
     private int boilIndex = -3, crushIndex = -2, dryIndex = -1;
 
     private void Start()
@@ -17,9 +17,6 @@ public class UIManager : MonoBehaviour
             inventorySlots.Add(slot);
         }
         inventoryPanel.SetActive(false);
-        boil.preserveAspect = true;
-        crush.preserveAspect = true;
-        dry.preserveAspect = true;
     }
 
     private void Update()
@@ -37,7 +34,7 @@ public class UIManager : MonoBehaviour
             {
                 boilIndex = 0;
             }
-            boil.sprite = inventorySlots[boilIndex].GetChild(0).GetComponent<Image>().sprite;
+            boil.UpdateIngredient(inventorySlots[boilIndex].GetComponent<InventorySlot>().ingredient);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -46,7 +43,7 @@ public class UIManager : MonoBehaviour
             {
                 crushIndex = 1;
             }
-            crush.sprite = inventorySlots[crushIndex].GetChild(0).GetComponent<Image>().sprite;
+            crush.UpdateIngredient(inventorySlots[crushIndex].GetComponent<InventorySlot>().ingredient);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -55,7 +52,7 @@ public class UIManager : MonoBehaviour
             {
                 dryIndex = 2;
             }
-            dry.sprite = inventorySlots[dryIndex].GetChild(0).GetComponent<Image>().sprite;
+            dry.UpdateIngredient(inventorySlots[dryIndex].GetComponent<InventorySlot>().ingredient);
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -63,6 +60,34 @@ public class UIManager : MonoBehaviour
             boilIndex = -3;
             crushIndex = -2;
             dryIndex = -1;
+            GameManager.INSTANCE.onItemPickUp(boil.ingredient, -1);
+            GameManager.INSTANCE.onItemPickUp(crush.ingredient, -1);
+            GameManager.INSTANCE.onItemPickUp(dry.ingredient, -1);
+        }
+    }
+
+    public void UpdateIngredientAmount(Ingredient ingredient, int amount)
+    {
+        foreach(var item in inventorySlots)
+        {
+            if(item.GetComponent<InventorySlot>().ingredient == ingredient)
+            {
+                item.GetComponent<InventorySlot>().UpdateAmount(GameManager.INSTANCE.inventory.items[ingredient]); 
+                break;
+            }
+        }
+
+        if(boil.ingredient == ingredient)
+        {
+            boil.UpdateAmount(GameManager.INSTANCE.inventory.items[ingredient]);
+        }
+        if(crush.ingredient == ingredient)
+        {
+            crush.UpdateAmount(GameManager.INSTANCE.inventory.items[ingredient]);
+        }
+        if(dry.ingredient == ingredient)
+        {
+            dry.UpdateAmount(GameManager.INSTANCE.inventory.items[ingredient]);
         }
     }
 }
