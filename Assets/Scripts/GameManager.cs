@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public GameObject selectedItem;
     public bool gameIsPaused = false;
+    public float playerMaxHealth = 100;
+    public float playerHealth = 100;
 
     public delegate void OnItemPickUp(Ingredient item, int amount = 1);
     public OnItemPickUp onItemPickUp;
@@ -58,5 +60,13 @@ public class GameManager : MonoBehaviour
     {
         gameIsPaused = !gameIsPaused;
         Time.timeScale = gameIsPaused ? 0.0f : 1.0f;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if(playerHealth > 0)
+        {
+            playerHealth -= damage;
+        }
     }
 }

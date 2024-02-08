@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public GameObject inventoryPanel;
     public List<Transform> inventorySlots;
     public SpellSlot boil, crush, dry;
+    public Transform healthDisplay;
+    public Image healthBar;
     private int boilIndex = -3, crushIndex = -2, dryIndex = -1;
 
     private void Start()
@@ -64,6 +66,13 @@ public class UIManager : MonoBehaviour
             GameManager.INSTANCE.onItemPickUp(crush.ingredient, -1);
             GameManager.INSTANCE.onItemPickUp(dry.ingredient, -1);
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GameManager.INSTANCE.TakeDamage(5);
+        }
+
+        healthBar.fillAmount = (1 / GameManager.INSTANCE.playerMaxHealth) * GameManager.INSTANCE.playerHealth;
     }
 
     public void UpdateIngredientAmount(Ingredient ingredient, int amount)
