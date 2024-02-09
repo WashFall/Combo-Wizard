@@ -10,10 +10,14 @@ public class InventorySlot : MonoBehaviour
     public Image itemImage;
     public TMP_Text amountText;
 
-    private void Start()
+    private void Awake()
     {
         itemImage = transform.GetChild(0).GetComponent<Image>();
         amountText = transform.GetChild(1).GetComponent<TMP_Text>();
+    }
+
+    private void Start()
+    {
         if (GameManager.INSTANCE.inventory.items[ingredient] > 0)
         {
             itemImage.sprite = ingredient.ingredientImage;

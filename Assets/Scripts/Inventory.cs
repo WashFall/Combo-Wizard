@@ -32,4 +32,9 @@ public class Inventory
     {
         items.Add(item, amount);
     }
+
+    public Inventory()
+    {
+        GameManager.INSTANCE.onItemPickUp += HandleItem;
+    }
 }

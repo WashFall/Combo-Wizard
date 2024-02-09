@@ -17,4 +17,4 @@ MonoBehaviour:
   notAvailableImage: {fileID: 21300000, guid: 6f6f9e0376d99c645ae9519e411dba9d, type: 3}
   boilEffect: 0
   crushEffect: 0
-  dryEffect: 0
+  dryEffect: 29

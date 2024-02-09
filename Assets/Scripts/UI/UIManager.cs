@@ -6,7 +6,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public GameObject inventoryPanel;
-    public List<Transform> inventorySlots;
+    public List<InventorySlot> inventorySlots;
     public SpellSlot boil, crush, dry;
     public Transform healthDisplay;
     public Image healthBar;
@@ -16,72 +16,69 @@ public class UIManager : MonoBehaviour
     {
         foreach (Transform slot in inventoryPanel.transform)
         {
-            inventorySlots.Add(slot);
+            inventorySlots.Add(slot.GetComponent<InventorySlot>());
         }
         inventoryPanel.SetActive(false);
+        GameManager.INSTANCE.onItemPickUp += UpdateIngredientAmount;
+        GameManager.INSTANCE.onDamageTaken += UpdateHealth;
     }
 
-    private void Update()
+    public void UpdateHealth(float maxHealth, float playerHealth)
     {
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-            GameManager.INSTANCE.TogglePauseGame();
-        }
+        healthBar.fillAmount = (1 / maxHealth) * playerHealth;
+    }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            boilIndex += 3;
-            if(boilIndex > 6)
-            {
-                boilIndex = 0;
-            }
-            boil.UpdateIngredient(inventorySlots[boilIndex].GetComponent<InventorySlot>().ingredient);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            crushIndex += 3;
-            if(crushIndex > 7)
-            {
-                crushIndex = 1;
-            }
-            crush.UpdateIngredient(inventorySlots[crushIndex].GetComponent<InventorySlot>().ingredient);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            dryIndex += 3;
-            if(dryIndex > 8)
-            {
-                dryIndex = 2;
-            }
-            dry.UpdateIngredient(inventorySlots[dryIndex].GetComponent<InventorySlot>().ingredient);
-        }
+    public void OpenInventory()
+    {
+        inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+    }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            boilIndex = -3;
-            crushIndex = -2;
-            dryIndex = -1;
-            GameManager.INSTANCE.onItemPickUp(boil.ingredient, -1);
-            GameManager.INSTANCE.onItemPickUp(crush.ingredient, -1);
-            GameManager.INSTANCE.onItemPickUp(dry.ingredient, -1);
-        }
+    public void SubmitSpell()
+    {
+        boilIndex = -3;
+        crushIndex = -2;
+        dryIndex = -1;
+    }
 
-        if (Input.GetKeyDown(KeyCode.L))
+    public void ShiftSlot(string slot)
+    {
+        switch (slot)
         {
-            GameManager.INSTANCE.TakeDamage(5);
+            case "boil":
+                boilIndex += 3;
+                if (boilIndex > 6)
+                {
+                    boilIndex = 0;
+                }
+                boil.UpdateIngredient(inventorySlots[boilIndex].ingredient);
+                break;
+            case "crush":
+                crushIndex += 3;
+                if (crushIndex > 7)
+                {
+                    crushIndex = 1;
+                }
+                crush.UpdateIngredient(inventorySlots[crushIndex].ingredient);
+                break;
+            case "dry":
+                dryIndex += 3;
+                if (dryIndex > 8)
+                {
+                    dryIndex = 2;
+                }
+                dry.UpdateIngredient(inventorySlots[dryIndex].ingredient);
+                break;
         }
-
-        healthBar.fillAmount = (1 / GameManager.INSTANCE.playerMaxHealth) * GameManager.INSTANCE.playerHealth;
+        
     }
 
     public void UpdateIngredientAmount(Ingredient ingredient, int amount)
     {
         foreach(var item in inventorySlots)
         {
-            if(item.GetComponent<InventorySlot>().ingredient == ingredient)
+            if(item.ingredient == ingredient)
             {
-                item.GetComponent<InventorySlot>().UpdateAmount(GameManager.INSTANCE.inventory.items[ingredient]); 
+                item.UpdateAmount(GameManager.INSTANCE.inventory.items[ingredient]); 
                 break;
             }
         }

@@ -33,19 +33,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            RaycastHit hitInfo;
-
-            bool hit = Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity);
-
-            if (hit)
-            {
-                agent.SetDestination(hitInfo.point);
-            }
-        }
-
-        if(agent.velocity == Vector3.zero)
+        if (agent.velocity == Vector3.zero)
         {
             tweenWeight = Mathf.Lerp(tweenWeight, idleWeight, 4 * Time.deltaTime);
             targetGroup.m_Targets[0].weight = tweenWeight;
@@ -54,6 +42,18 @@ public class PlayerMove : MonoBehaviour
         {
             tweenWeight = Mathf.Lerp(tweenWeight, priorityWeight, tweenSpeed * Time.deltaTime);
             targetGroup.m_Targets[0].weight = tweenWeight;
+        }
+    }
+
+    public void SetDestination()
+    {
+        RaycastHit hitInfo;
+
+        bool hit = Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity);
+
+        if (hit)
+        {
+            agent.SetDestination(hitInfo.point);
         }
     }
 }

@@ -16,5 +16,5 @@ MonoBehaviour:
   ingredientImage: {fileID: 21300000, guid: 34065d9cdc726b142ba4b32f85fdbe9b, type: 3}
   notAvailableImage: {fileID: 21300000, guid: 21cf578d6f730064da346f51bbbf2019, type: 3}
   boilEffect: 0
-  crushEffect: 0
+  crushEffect: 9
   dryEffect: 0

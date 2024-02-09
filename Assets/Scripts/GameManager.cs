@@ -6,10 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager INSTANCE;
     [HideInInspector]
     public GameObject player;
-    public Inventory inventory = new Inventory();
     public List<Item> itemsInLevel;
     public List<Ingredient> ingredients;
     public UIManager uiManager;
+    public Inventory inventory;
     public GameObject selectedItem;
     public bool gameIsPaused = false;
     public float playerMaxHealth = 100;
@@ -18,19 +18,22 @@ public class GameManager : MonoBehaviour
     public delegate void OnItemPickUp(Ingredient item, int amount = 1);
     public OnItemPickUp onItemPickUp;
 
+    public delegate void OnDamageTaken(float maxHealth, float playerHealth);
+    public OnDamageTaken onDamageTaken;
+
+    public delegate bool OnCastSpell();
+    public OnCastSpell onCastSpell;
+
+
     private void Awake()
     {
         INSTANCE = this;
         player = GameObject.Find("Player");
+        inventory = new Inventory();
         foreach (var ingredient in ingredients)
         {
             inventory.RegisterNewItem(ingredient, 0);
         }
-    }
-
-    private void Start()
-    {
-        AssignListeners();
     }
 
     private void Update()
@@ -42,12 +45,6 @@ public class GameManager : MonoBehaviour
                 onItemPickUp(item, 5);
             }
         }
-    }
-
-    private void AssignListeners()
-    {
-        onItemPickUp += inventory.HandleItem;
-        onItemPickUp += uiManager.UpdateIngredientAmount;
     }
 
     public void AddItemToList(Item item)
