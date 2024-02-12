@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public SpellSlot boil, crush, dry;
     public Transform healthDisplay;
     public Image healthBar;
+    public bool spellSubmitted = false;
     private int boilIndex = -3, crushIndex = -2, dryIndex = -1;
 
     private void Start()
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     public void SubmitSpell()
     {
+        spellSubmitted = true;
         boilIndex = -3;
         crushIndex = -2;
         dryIndex = -1;
@@ -42,6 +44,15 @@ public class UIManager : MonoBehaviour
 
     public void ShiftSlot(string slot)
     {
+        if(spellSubmitted)
+        {
+            spellSubmitted = false;
+            GameManager.INSTANCE.RemoveIngredients(boil.ingredient, crush.ingredient, dry.ingredient);
+            UpdateIngredientAmount(boil.ingredient);
+            UpdateIngredientAmount(crush.ingredient);
+            UpdateIngredientAmount(dry.ingredient);
+        }
+
         switch (slot)
         {
             case "boil":
@@ -72,7 +83,7 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void UpdateIngredientAmount(Ingredient ingredient, int amount)
+    public void UpdateIngredientAmount(Ingredient ingredient, int amount = 0)
     {
         foreach(var item in inventorySlots)
         {

@@ -4,8 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager INSTANCE;
-    [HideInInspector]
-    public GameObject player;
+    public PlayerManager playerManager;
     public List<Item> itemsInLevel;
     public List<Ingredient> ingredients;
     public UIManager uiManager;
@@ -24,11 +23,13 @@ public class GameManager : MonoBehaviour
     public delegate bool OnCastSpell();
     public OnCastSpell onCastSpell;
 
+    public delegate void OnMovePlayer();
+    public OnMovePlayer onMovePlayer;
+
 
     private void Awake()
     {
         INSTANCE = this;
-        player = GameObject.Find("Player");
         inventory = new Inventory();
         foreach (var ingredient in ingredients)
         {
@@ -36,21 +37,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            foreach(var item in ingredients)
-            {
-                onItemPickUp(item, 5);
-            }
-        }
-    }
-
     public void AddItemToList(Item item)
     {
         itemsInLevel.Add(item);
-        item.player = player.transform;
+        item.player = playerManager.transform;
     }
 
     public void TogglePauseGame()
@@ -59,11 +49,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = gameIsPaused ? 0.0f : 1.0f;
     }
 
-    public void TakeDamage(float damage)
+    public void ItemRefill()
     {
-        if(playerHealth > 0)
+        foreach (var item in ingredients)
         {
-            playerHealth -= damage;
+            onItemPickUp(item, 5);
         }
+    }
+
+    public void RemoveIngredients(Ingredient boil, Ingredient crush, Ingredient dry)
+    {
+        inventory.HandleItem(boil, -1);
+        inventory.HandleItem(crush, -1);
+        inventory.HandleItem(dry, -1);
     }
 }

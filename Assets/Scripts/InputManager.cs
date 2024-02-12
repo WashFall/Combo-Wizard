@@ -5,20 +5,13 @@ using static GameManager;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerMove playerMove;
-
-    private void Start()
-    {
-        playerMove = INSTANCE.player.GetComponent<PlayerMove>();
-    }
-
     void Update()
     {
         if (!INSTANCE.gameIsPaused)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                playerMove.SetDestination();
+                INSTANCE.onMovePlayer();
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -50,6 +43,23 @@ public class InputManager : MonoBehaviour
         {
             INSTANCE.uiManager.OpenInventory();
             INSTANCE.TogglePauseGame();
+        }
+
+        // DEBUG COMMANDS
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            INSTANCE.playerManager.TakeDamage(5);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            INSTANCE.playerManager.TakeDamage(-5);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            INSTANCE.ItemRefill();
         }
     }
 }

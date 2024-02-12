@@ -24,6 +24,7 @@ public class PlayerMove : MonoBehaviour
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
         tweenWeight = idleWeight;
+        GameManager.INSTANCE.onMovePlayer += SetDestination;
     }
 
     private void Update()

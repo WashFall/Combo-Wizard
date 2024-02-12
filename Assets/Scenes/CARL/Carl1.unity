@@ -788,6 +788,7 @@ MonoBehaviour:
   dry: {fileID: 2044795758}
   healthDisplay: {fileID: 268793754}
   healthBar: {fileID: 43354827}
+  spellSubmitted: 0
 --- !u!4 &124127934
 Transform:
   m_ObjectHideFlags: 0
@@ -3631,7 +3632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339d54cfbb83f244dbbaf793d3ea9d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 0}
+  ingredient: {fileID: 11400000, guid: 4e5a33bc956cdca42aa81debe6f447ae, type: 2}
   slotImage: {fileID: 0}
   slotText: {fileID: 0}
 --- !u!1 &800015214
@@ -3999,6 +4000,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &872169166 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 446230600391994602, guid: a227e4fd3e1b85a4c91f9be55434333b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5196673064771485647}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &872169174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872169166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe22311bbefdbf43a723f040a70c717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMove: {fileID: 0}
+  playerObject: {fileID: 0}
+  maxPlayerHealth: 100
+  currentPlayerHealth: 100
 --- !u!1 &1003469024
 GameObject:
   m_ObjectHideFlags: 0
@@ -5298,7 +5321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde3ce1b1e5d5ec42b756776f0a173a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  playerManager: {fileID: 872169174}
   itemsInLevel: []
   ingredients:
   - {fileID: 11400000, guid: c34d58b1061eb3847962e193121bbbf5, type: 2}
@@ -6437,7 +6460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339d54cfbb83f244dbbaf793d3ea9d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 0}
+  ingredient: {fileID: 11400000, guid: 4e5a33bc956cdca42aa81debe6f447ae, type: 2}
   slotImage: {fileID: 0}
   slotText: {fileID: 0}
 --- !u!1 &1700641040
@@ -7639,7 +7662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339d54cfbb83f244dbbaf793d3ea9d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 0}
+  ingredient: {fileID: 11400000, guid: 4e5a33bc956cdca42aa81debe6f447ae, type: 2}
   slotImage: {fileID: 0}
   slotText: {fileID: 0}
 --- !u!1 &2048577999
@@ -8406,7 +8429,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 446230600391994602, guid: a227e4fd3e1b85a4c91f9be55434333b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 872169174}
   m_SourcePrefab: {fileID: 100100000, guid: a227e4fd3e1b85a4c91f9be55434333b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
